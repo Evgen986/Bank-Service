@@ -39,6 +39,11 @@ public class ClientService {
     }
 
     @Transactional
+    public void updateAllClient(List<Client> clients){
+        clientRepository.saveAll(clients);
+    }
+
+    @Transactional
     public Client createClient(Client client){
         client.getPhones().forEach(p -> checkPhone(p.getPhoneNumber()));
         client.getEmails().forEach(e -> checkEmail(e.getEmail()));

@@ -40,13 +40,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- graphql -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-graphql</artifactId>
-        </dependency>
-
-
         <!-- database -->
         <dependency>
             <groupId>org.postgresql</groupId>
