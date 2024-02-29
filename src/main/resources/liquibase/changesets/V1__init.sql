@@ -1,12 +1,10 @@
 create table if not exists client
 (
-    client_id  bigserial primary key,
-    username   varchar(255) not null unique,
-    password   varchar(255) not null,
-    firstname  varchar(100) not null,
-    lastname   varchar(100) not null,
-    patronymic varchar(100),
-    birthday   date         not null
+    client_id bigserial primary key,
+    username  varchar(255) not null unique,
+    password  varchar(255) not null,
+    name      varchar(255),
+    birthday  date
 );
 
 create table if not exists bank_account

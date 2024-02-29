@@ -1,6 +1,6 @@
-insert into client (username, password, firstname, lastname, patronymic, birthday)
-values ('ivan11', '123', 'Иван', 'Иванов', 'Иванович', '1990-01-31'),
-       ('serg22', '123', 'Сергей', 'Сергеев', 'Сергеевич', '1992-03-18');
+insert into client (username, password, name, birthday)
+values ('ivan11', '123', 'Иванов Иван Иванович', '1990-01-31'),
+       ('serg22', '123', 'Сергеев Сергей Сергеевич', '1992-03-18');
 
 insert into bank_account (client_id, balance)
 values (1, 100.00),

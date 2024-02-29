@@ -23,9 +23,7 @@ public class Client {
     private Long clientId;
     private String username;
     private String password;
-    private String firstname;
-    private String lastname;
-    private String patronymic;
+    private String name;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
     @OneToMany(mappedBy = "client",
