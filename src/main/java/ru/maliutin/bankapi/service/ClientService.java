@@ -3,8 +3,8 @@ package ru.maliutin.bankapi.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.maliutin.bankapi.exception.ClientUpdateException;
-import ru.maliutin.bankapi.exception.ResourceNotFoundException;
+import ru.maliutin.bankapi.model.exception.ClientUpdateException;
+import ru.maliutin.bankapi.model.exception.ResourceNotFoundException;
 import ru.maliutin.bankapi.model.Client;
 import ru.maliutin.bankapi.model.Email;
 import ru.maliutin.bankapi.model.Phone;
@@ -42,6 +42,7 @@ public class ClientService {
     public Client createClient(Client client){
         client.getPhones().forEach(p -> checkPhone(p.getPhoneNumber()));
         client.getEmails().forEach(e -> checkEmail(e.getEmail()));
+        client.getAccount().setInitialDeposit(client.getAccount().getBalance());
         return clientRepository.save(client);
     }
 

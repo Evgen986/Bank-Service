@@ -1,4 +1,4 @@
-package ru.maliutin.bankapi.controller;
+package ru.maliutin.bankapi.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.maliutin.bankapi.dto.ClientDto;
-import ru.maliutin.bankapi.mapper.ClientMapper;
+import ru.maliutin.bankapi.web.dto.ClientDto;
+import ru.maliutin.bankapi.web.mapper.ClientMapper;
 import ru.maliutin.bankapi.model.Client;
 import ru.maliutin.bankapi.service.ClientService;
 

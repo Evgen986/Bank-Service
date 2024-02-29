@@ -1,4 +1,4 @@
-package ru.maliutin.bankapi.exception;
+package ru.maliutin.bankapi.model.exception;
 
 public class ClientUpdateException extends RuntimeException{
     public ClientUpdateException(String message) {

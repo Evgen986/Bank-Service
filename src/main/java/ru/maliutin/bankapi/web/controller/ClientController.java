@@ -1,11 +1,10 @@
-package ru.maliutin.bankapi.controller;
+package ru.maliutin.bankapi.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.maliutin.bankapi.dto.ClientDto;
-import ru.maliutin.bankapi.mapper.ClientMapper;
+import ru.maliutin.bankapi.web.dto.ClientDto;
+import ru.maliutin.bankapi.web.mapper.ClientMapper;
 import ru.maliutin.bankapi.model.Client;
 import ru.maliutin.bankapi.service.ClientService;
 

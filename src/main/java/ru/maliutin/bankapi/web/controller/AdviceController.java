@@ -1,10 +1,10 @@
-package ru.maliutin.bankapi.controller;
+package ru.maliutin.bankapi.web.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.maliutin.bankapi.exception.*;
+import ru.maliutin.bankapi.model.exception.*;
 
 @RestControllerAdvice
 public class AdviceController {

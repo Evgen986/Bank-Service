@@ -3,9 +3,8 @@ package ru.maliutin.bankapi.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import ru.maliutin.bankapi.exception.ResourceNotFoundException;
+import ru.maliutin.bankapi.model.exception.ResourceNotFoundException;
 import ru.maliutin.bankapi.model.Client;
 import ru.maliutin.bankapi.repository.ClientRepository;
 

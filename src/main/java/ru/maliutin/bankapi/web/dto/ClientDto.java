@@ -1,4 +1,4 @@
-package ru.maliutin.bankapi.dto;
+package ru.maliutin.bankapi.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.CascadeType;

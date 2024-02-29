@@ -1,4 +1,4 @@
-package ru.maliutin.bankapi.exception;
+package ru.maliutin.bankapi.model.exception;
 
 /**
  * Исключение при превышении остатка средств.

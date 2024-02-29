@@ -1,7 +1,7 @@
-package ru.maliutin.bankapi.mapper;
+package ru.maliutin.bankapi.web.mapper;
 
 import org.springframework.stereotype.Service;
-import ru.maliutin.bankapi.dto.ClientDto;
+import ru.maliutin.bankapi.web.dto.ClientDto;
 import ru.maliutin.bankapi.model.Account;
 import ru.maliutin.bankapi.model.Client;
 import ru.maliutin.bankapi.model.Email;

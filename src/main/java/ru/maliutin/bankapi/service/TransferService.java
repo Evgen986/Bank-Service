@@ -3,8 +3,8 @@ package ru.maliutin.bankapi.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.maliutin.bankapi.exception.ExcessBalanceException;
-import ru.maliutin.bankapi.exception.IncorrectTransferAmountException;
+import ru.maliutin.bankapi.model.exception.ExcessBalanceException;
+import ru.maliutin.bankapi.model.exception.IncorrectTransferAmountException;
 import ru.maliutin.bankapi.model.Client;
 
 import java.math.BigDecimal;

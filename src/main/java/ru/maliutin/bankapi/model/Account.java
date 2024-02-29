@@ -19,6 +19,7 @@ public class Account {
     @JoinColumn(name = "client_id")
     private Client client;
     private BigDecimal balance;
+    private BigDecimal initialDeposit;
 
     @Override
     public String toString() {

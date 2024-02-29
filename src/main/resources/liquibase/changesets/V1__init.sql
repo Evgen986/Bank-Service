@@ -12,6 +12,7 @@ create table if not exists bank_account
     account_id bigserial primary key,
     client_id  bigint not null,
     balance    decimal(12, 2) check ( balance >= 0 ),
+    initial_deposit decimal(12, 2),
     unique (account_id, client_id),
     constraint fk_client_bank_account foreign key (client_id) references client (client_id) on delete cascade on update no action
 );

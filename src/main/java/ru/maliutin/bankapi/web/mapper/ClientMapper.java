@@ -1,6 +1,6 @@
-package ru.maliutin.bankapi.mapper;
+package ru.maliutin.bankapi.web.mapper;
 
-import ru.maliutin.bankapi.dto.ClientDto;
+import ru.maliutin.bankapi.web.dto.ClientDto;
 import ru.maliutin.bankapi.model.Client;
 
 public interface ClientMapper {

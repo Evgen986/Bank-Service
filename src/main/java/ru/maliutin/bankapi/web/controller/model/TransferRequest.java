@@ -1,4 +1,4 @@
-package ru.maliutin.bankapi.controller.model;
+package ru.maliutin.bankapi.web.controller.model;
 
 import java.math.BigDecimal;
 
