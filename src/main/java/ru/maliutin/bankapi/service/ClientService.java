@@ -33,17 +33,10 @@ public class ClientService {
         return client.orElseThrow(() ->
                 new ResourceNotFoundException("client by " + clientId + " not found!"));
     }
-//    @Transactional
-//    public Client updateClient(Client client){
-//        checkPhone(client.getClientId(), client.getPhones());
-//        checkEmail(client.getClientId(), client.getEmails());
-//        Client updateClient = getClient(client.getClientId());
-//        client.getPhones().forEach(phone -> phone.setClient(updateClient));
-//        client.getEmails().forEach(email -> email.setClient(updateClient));
-//        updateClient.setPhones(client.getPhones());
-//        updateClient.setEmails(client.getEmails());
-//        return clientRepository.save(updateClient);
-//    }
+    @Transactional
+    public void updateClient(Client client){
+        clientRepository.save(client);
+    }
 
     @Transactional
     public Client createClient(Client client){
