@@ -13,3 +13,9 @@ spring:
     change-log: classpath:liquibase/db.changelog.yaml
     enabled: true
     default-schema: bank_api
+security:
+  # Конфигурация Jwt токенов (секретный ключ, время жизни короткоживущего и долгоживущего токенов)
+  jwt:
+    secret: ${JWT_SECRET}
+    access: 1
+    refresh: 30

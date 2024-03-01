@@ -1,64 +1,65 @@
 package ru.maliutin.bankapi.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import ru.maliutin.bankapi.model.exception.ResourceNotFoundException;
+
 import ru.maliutin.bankapi.model.Client;
-import ru.maliutin.bankapi.repository.ClientRepository;
+import ru.maliutin.bankapi.model.exception.ResourceNotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class SearchService {
+/**
+ * Интерфейс сервиса поиска и фильтрации клиентов.
+ */
+public interface SearchService {
+    /**
+     * Поиск клиентов старше переданной даты.
+     * @param date дата для поиска.
+     * @param sort включение сортировки по дате рождения.
+     * @return список клиентов.
+     */
+    List<Client> findOlderDate(LocalDate date, boolean sort);
 
-    private final ClientRepository clientRepository;
+    /**
+     * Поиск клиентов старше переданной даты.
+     * @param date дата для поиска.
+     * @param page номер страницы.
+     * @param size количество записей.
+     * @param sort включение сортировки по дате рождения.
+     * @return список клиентов.
+     */
+    List<Client> findOlderDate(LocalDate date, int page, int size, boolean sort);
 
-    public List<Client> findOlderDate(LocalDate date, boolean sort){
-        if (sort) {
-            return clientRepository.findByBirthdayAfterOrderByBirthday(date);
-        }
-        return clientRepository.findByBirthdayAfter(date);
-    }
+    /**
+     * Поиск по номеру телефона.
+     * @param phone номер для поиска.
+     * @return найденный клиент.
+     * @throws ResourceNotFoundException клиент не найден.
+     */
+    Client findByPhone(String phone);
 
-    public List<Client> findOlderDate(LocalDate date, int page, int size, boolean sort){
-        Pageable pageable = PageRequest.of(page, size);
-        if (sort) {
-            return clientRepository.findByBirthdayAfterOrderByBirthday(date, pageable);
-        }else{
-            return clientRepository.findByBirthdayAfter(date, pageable);
-        }
-    }
+    /**
+     * Поиск по имени.
+     * @param name имя клиента.
+     * @param sort включение сортировки по алфавиту.
+     * @return список клиентов.
+     */
+    List<Client> findByName(String name, boolean sort);
 
-    public Client findByPhone(String phone){
-        List<Client> findClient = clientRepository.findByPhoneNumber(phone);
-        if (findClient.isEmpty()){
-            throw new ResourceNotFoundException("Client by phone " + phone + " not found!");
-        }
-        return findClient.get(0);
-    }
+    /**
+     * Поиск по имени.
+     * @param name имя клиента.
+     * @param page номер страницы.
+     * @param size количество записей.
+     * @param sort включение сортировки по алфавиту.
+     * @return список клиентов.
+     */
+    List<Client> findByName(String name, int page, int size, boolean sort);
 
-    public List<Client> findByName(String name, boolean sort){
-        if (sort) return clientRepository.findByNameLikeOrderByName(name);
-        return clientRepository.findByNameLike(name);
-    }
+    /**
+     * Поиск по email.
+     * @param email email для поиска.
+     * @return найденный клиент.
+     */
+    Client findByEmail(String email);
 
-    public List<Client> findByName(String name, int page, int size, boolean sort){
-        Pageable pageable = PageRequest.of(page, size);
-        if (sort) {
-            return clientRepository.findByNameLikeOrderByName(name, pageable);
-        }
-        return clientRepository.findByNameLike(name, pageable);
-    }
-
-    public Client findByEmail(String email){
-        List<Client> findClient = clientRepository.findByEmail(email);
-        if (findClient.isEmpty()){
-            throw new ResourceNotFoundException("Client by email " + email + " not found!");
-        }
-        return findClient.get(0);
-    }
 }

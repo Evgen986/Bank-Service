@@ -6,6 +6,9 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 
+/**
+ * Сущность аккаунта.
+ */
 @Data
 @Entity
 @Table(name = "bank_account")
@@ -18,7 +21,13 @@ public class Account {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private Client client;
+    /**
+     * Текущий баланс.
+     */
     private BigDecimal balance;
+    /**
+     * Изначальный депозит.
+     */
     private BigDecimal initialDeposit;
 
     @Override

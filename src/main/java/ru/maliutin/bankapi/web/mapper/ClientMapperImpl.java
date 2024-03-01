@@ -11,8 +11,16 @@ import ru.maliutin.bankapi.model.Phone;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Сервис преобразования Dto в Entity и наоборот.
+ */
 @Service
 public class ClientMapperImpl implements ClientMapper{
+    /**
+     * Преобразование в Dto.
+     * @param client объект сущности.
+     * @return объект Dto.
+     */
     @Override
     public ClientDto toDto(Client client) {
         ClientDto clientDto = new ClientDto();
@@ -33,6 +41,11 @@ public class ClientMapperImpl implements ClientMapper{
         return clientDto;
     }
 
+    /**
+     * Преобразование в сущность.
+     * @param clientDto объект dto.
+     * @return объект сущности.
+     */
     @Override
     public Client toEntity(ClientDto clientDto) {
         Client client = new Client();

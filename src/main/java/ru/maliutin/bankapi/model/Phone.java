@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
+/**
+ * Сущность номера телефона.
+ */
 @Data
 @Entity
 @Table(name = "phone")

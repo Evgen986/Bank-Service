@@ -1,0 +1,55 @@
+package ru.maliutin.bankapi.web.controller;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import ru.maliutin.bankapi.service.AuthService;
+import ru.maliutin.bankapi.web.model.JwtRequest;
+import ru.maliutin.bankapi.web.model.JwtResponse;
+
+
+/**
+ * Контроллер отвечающий за авторизацию пользователей.
+ */
+
+@RestController
+@RequestMapping("/api/auth")
+@RequiredArgsConstructor
+//@Tag(name = "Auth Controller", description = "Auth API")
+public class AuthController {
+    /**
+     * Поле сервиса аутентификации.
+     */
+    private final AuthService authService;
+
+    /**
+     * Аутентификация пользователя.
+     *
+     * @param loginRequest принимает запрос пользователя
+     *                     в виде jwt запроса (с токеном)
+     * @return jwt ответ с парой токенов.
+     */
+    @PostMapping("/login")
+    // Аннотация Swagger добавляющая описание метода в документацию.
+    //@Operation(summary = "Authenticate user")
+    public JwtResponse login(
+            @Validated @RequestBody final JwtRequest loginRequest) {
+        return authService.login(loginRequest);
+    }
+
+    /**
+     * Метод обновления пары токенов.
+     *
+     * @param refreshToken токен для обновления.
+     * @return обновленные токены.
+     */
+    // Аннотация Swagger добавляющая описание метода в документацию.
+    // @Operation(summary = "Refresh token")
+    @PostMapping("/refresh")
+    public JwtResponse refresh(@RequestBody final String refreshToken) {
+        return authService.refresh(refreshToken);
+    }
+}

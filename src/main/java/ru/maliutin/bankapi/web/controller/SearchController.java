@@ -9,19 +9,35 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.maliutin.bankapi.web.dto.ClientDto;
 import ru.maliutin.bankapi.web.mapper.ClientMapper;
 import ru.maliutin.bankapi.model.Client;
-import ru.maliutin.bankapi.service.SearchService;
+import ru.maliutin.bankapi.service.impl.SearchServiceImpl;
 
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Контроллер api поиска и сортировки клиентов.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/search")
 public class SearchController {
-
-    private final SearchService searchService;
+    /**
+     * Сервис поиска и сортировки.
+     */
+    private final SearchServiceImpl searchService;
+    /**
+     * Преобразование DTO в Entity и наоборот.
+     */
     private final ClientMapper clientMapper;
 
+    /**
+     * Энпоинт поиска клиентов старше переданной даты рождения.
+     * @param date дата рождения.
+     * @param page номер страницы
+     * @param size размер страницы
+     * @param sort включение сортировки по дате рождения.
+     * @return ответ со списком клиентов.
+     */
     @GetMapping("/birthday")
     public ResponseEntity<List<ClientDto>> getByBirthday(
             @RequestParam("date") LocalDate date,
@@ -37,6 +53,11 @@ public class SearchController {
         return ResponseEntity.ok(findClients.stream().map(clientMapper::toDto).toList());
     }
 
+    /**
+     * Энпоинт поиска клиентов по номеру телефона.
+     * @param phone номер телефона.
+     * @return ответ с объектом клиента.
+     */
     @GetMapping("/phone")
     public ResponseEntity<ClientDto> getByPhone(
             @RequestParam String phone){
@@ -44,6 +65,14 @@ public class SearchController {
                 clientMapper.toDto(searchService.findByPhone(phone)));
     }
 
+    /**
+     * Энпоинт поиска клиентов по имени.
+     * @param name имя клиента.
+     * @param page номер страницы.
+     * @param size размер страницы.
+     * @param sort включение сортировки по алфавиту.
+     * @return ответ со списком клиентов.
+     */
     @GetMapping("/name")
     public ResponseEntity<List<ClientDto>> getByName(
             @RequestParam String name,
@@ -61,6 +90,11 @@ public class SearchController {
                 .stream().map(clientMapper::toDto).toList());
     }
 
+    /**
+     * Энпоинт поиска клиентов по email.
+     * @param email адрес email.
+     * @return ответ с объектом клиента.
+     */
     @GetMapping("/email")
     public ResponseEntity<ClientDto> getByEmail(@RequestParam String email){
         return ResponseEntity.ok(

@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
+/**
+ * Сущность электронной почты.
+ */
 @Data
 @Entity
 public class Email {
