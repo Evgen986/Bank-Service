@@ -1,5 +1,7 @@
 package ru.maliutin.bankapi.web.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +20,7 @@ import ru.maliutin.bankapi.web.model.JwtResponse;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-//@Tag(name = "Auth Controller", description = "Auth API")
+@Tag(name = "Auth Controller", description = "Auth API")
 public class AuthController {
     /**
      * Поле сервиса аутентификации.
@@ -33,8 +35,7 @@ public class AuthController {
      * @return jwt ответ с парой токенов.
      */
     @PostMapping("/login")
-    // Аннотация Swagger добавляющая описание метода в документацию.
-    //@Operation(summary = "Authenticate user")
+    @Operation(summary = "Authenticate client")
     public JwtResponse login(
             @Validated @RequestBody final JwtRequest loginRequest) {
         return authService.login(loginRequest);
@@ -46,8 +47,7 @@ public class AuthController {
      * @param refreshToken токен для обновления.
      * @return обновленные токены.
      */
-    // Аннотация Swagger добавляющая описание метода в документацию.
-    // @Operation(summary = "Refresh token")
+    @Operation(summary = "Refresh token")
     @PostMapping("/refresh")
     public JwtResponse refresh(@RequestBody final String refreshToken) {
         return authService.refresh(refreshToken);

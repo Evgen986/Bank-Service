@@ -1,6 +1,7 @@
 package ru.maliutin.bankapi.web.model;
 
 //import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -8,20 +9,19 @@ import lombok.Data;
  * Класс авторизации пользователя.
  */
 @Data
-// Аннотация Swagger добавляющая описание схемы в документации
-//@Schema(description = "Request for login")
+@Schema(description = "Request for login")
 public class JwtRequest {
     /**
      * Поле с логином пользователя.
      */
     @NotNull(message = "Логин не может быть пусты!")
-    //@Schema(description = "email", example = "johndoe@gmail.com")
+    @Schema(description = "username", example = "ivan11")
     private String username;
 
     /**
      * Поле с паролем пользователя.
      */
     @NotNull(message = "Пароль не может быть пустым!")
-    //@Schema(description = "password", example = "12345")
+    @Schema(description = "password", example = "123")
     private String password;
 }

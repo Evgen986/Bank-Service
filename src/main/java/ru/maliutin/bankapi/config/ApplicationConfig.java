@@ -1,8 +1,14 @@
 package ru.maliutin.bankapi.config;
 
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
@@ -25,7 +31,7 @@ import ru.maliutin.bankapi.web.security.JwtTokenProvider;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class ApplicationConfig {
     /**
      * Объект работы с токенами.
@@ -100,4 +106,28 @@ public class ApplicationConfig {
         return httpSecurity.build();
     }
 
+    /**
+     * Бин конфигурации Swagger.
+     *
+     * @return конфигурационный бин swagger.
+     */
+    @Bean
+    public OpenAPI openAPI() {
+        return new OpenAPI().addSecurityItem(
+                        new SecurityRequirement()
+                                .addList("bearerAuth"))
+                .components(new Components()
+                        .addSecuritySchemes(
+                                "bearerAuth",
+                                new SecurityScheme()
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT"))
+                )
+                .info(new Info()
+                        .title("Bank service")
+                        .description("Service for banking transactions, customer data, customer data filtering")
+                        .version("1.0")
+                );
+    }
 }

@@ -1,6 +1,7 @@
 package ru.maliutin.bankapi.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.maliutin.bankapi.model.exception.ClientUpdateException;
@@ -15,6 +16,8 @@ import ru.maliutin.bankapi.service.ClientService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Сервис для работы с клиентами.
@@ -35,7 +38,19 @@ public class ClientServiceImpl implements ClientService {
      * Репозиторий email.
      */
     private final EmailRepository emailRepository;
-
+    /**
+     * Кодировщик паролей.
+     */
+    private final PasswordEncoder passwordEncoder;
+    /**
+     * Выражение проверки email.
+     */
+    private static final String EMAIL_REGEX =
+            "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+    /**
+     * Выражение проверки телефона.
+     */
+    private static final String PHONE_REGEX = "^\\+7-(\\d{3}-){2}\\d{2}-\\d{2}$";
     /**
      * Получение клиента по логину.
      * @param username логин клиента.
@@ -101,6 +116,7 @@ public class ClientServiceImpl implements ClientService {
         client.getPhones().forEach(p -> checkPhone(p.getPhoneNumber()));
         client.getEmails().forEach(e -> checkEmail(e.getEmail()));
         client.getAccount().setInitialDeposit(client.getAccount().getBalance());
+        client.setPassword(passwordEncoder.encode(client.getPassword()));
         return clientRepository.save(client);
     }
 
@@ -113,6 +129,11 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Transactional
     public Client addPhone(Long clientId, String phone){
+        Pattern pattern = Pattern.compile(PHONE_REGEX);
+        Matcher matcher = pattern.matcher(phone);
+        if (!matcher.matches()) {
+            throw new ClientUpdateException("Invalid phone format: " + phone);
+        }
         checkPhone(phone);
         Client client = getClientById(clientId);
         Phone newPhone = new Phone();
@@ -131,6 +152,11 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Transactional
     public Client addEmail(Long clientId, String email){
+        Pattern pattern = Pattern.compile(EMAIL_REGEX);
+        Matcher matcher = pattern.matcher(email);
+        if (!matcher.matches()) {
+            throw new ClientUpdateException("Invalid email format: " + email);
+        }
         checkEmail(email);
         Client client = getClientById(clientId);
         Email newEmail = new Email();

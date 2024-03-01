@@ -1,13 +1,17 @@
 package ru.maliutin.bankapi.web.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import ru.maliutin.bankapi.service.ClientService;
 import ru.maliutin.bankapi.web.dto.ClientDto;
 import ru.maliutin.bankapi.web.mapper.ClientMapper;
 import ru.maliutin.bankapi.model.Client;
 import ru.maliutin.bankapi.service.impl.ClientServiceImpl;
+import ru.maliutin.bankapi.web.model.ContactRequest;
 
 import java.util.List;
 
@@ -17,11 +21,12 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/client")
+@Tag(name = "Client Controller", description = "Client API")
 public class ClientController {
     /**
      * Сервис клиентов.
      */
-    private final ClientServiceImpl clientService;
+    private final ClientService clientService;
     /**
      * Преобразование DTO в Entity и наоборот.
      */
@@ -32,6 +37,7 @@ public class ClientController {
      * @return ответ со списком клиентов.
      */
     @GetMapping("/")
+    @Operation(summary = "Get all clients")
     public ResponseEntity<List<ClientDto>> getClients(){
         return ResponseEntity.ok(
                 clientService.getAll()
@@ -46,6 +52,7 @@ public class ClientController {
      * @return ответ с найденным клиентом.
      */
     @GetMapping("/{client_id}")
+    @Operation(summary = "Get client by id")
     public ResponseEntity<ClientDto> getClientById(
             @PathVariable("client_id") Long clientId){
         return ResponseEntity.ok(
@@ -55,72 +62,67 @@ public class ClientController {
     /**
      * Энпоинт добавления номера телефона клиента.
      * @param clientId идентификатор клиента.
-     * @param phone номер телефона.
+     * @param contactRequest номер телефона.
      * @return ответ с обновленным клиентом.
      */
     @PutMapping("/{client_id}/phones")
+    @Operation(summary = "Add a new phone to a client by his id")
     @PreAuthorize("@customSecurityExpression.canAccessUser(#clientId)")
     public ResponseEntity<ClientDto> addPhoneClient(
             @PathVariable("client_id") Long clientId,
-            @RequestParam(value = "phone", required = false) String phone){
-        if (phone != null){
-            Client client = clientService.addPhone(clientId, phone);
+            @RequestBody ContactRequest contactRequest){
+            Client client = clientService.addPhone(clientId,
+                    contactRequest.contact());
             return ResponseEntity.ok(clientMapper.toDto(client));
-        }
-        return ResponseEntity.badRequest().build();
     }
 
     /**
      * Энпоинт добавления email.
      * @param clientId идентификатор клиента.
-     * @param email адрес email.
+     * @param contactRequest адрес email.
      * @return ответ с обновленным клиентом.
      */
     @PutMapping("/{client_id}/emails")
+    @Operation(summary = "Add a new email to a client by his id")
     @PreAuthorize("@customSecurityExpression.canAccessUser(#clientId)")
     public ResponseEntity<ClientDto> addEmailClient(
             @PathVariable("client_id") Long clientId,
-            @RequestParam(value = "email", required = false) String email){
-        if (email != null){
-            Client client = clientService.addEmail(clientId, email);
+            @RequestBody ContactRequest contactRequest){
+            Client client = clientService.addEmail(clientId,
+                    contactRequest.contact());
             return ResponseEntity.ok(clientMapper.toDto(client));
-        }
-        return ResponseEntity.badRequest().build();
     }
 
     /**
      * Энпоинт удаления номера телефона.
      * @param clientId идентификатор клиента.
-     * @param phone номер телефона.
+     * @param contactRequest номер телефона.
      * @return ответ с обновленным клиентом.
      */
     @DeleteMapping("/{client_id}/phones")
+    @Operation(summary = "Remove phone to client by his id")
     @PreAuthorize("@customSecurityExpression.canAccessUser(#clientId)")
     public ResponseEntity<ClientDto> removePhoneClient(
             @PathVariable("client_id") Long clientId,
-            @RequestParam(value = "phone", required = false) String phone){
-        if (phone != null){
-            Client client = clientService.removePhone(clientId, phone);
+            @RequestBody ContactRequest contactRequest){
+            Client client = clientService.removePhone(clientId,
+                    contactRequest.contact());
             return ResponseEntity.ok(clientMapper.toDto(client));
-        }
-        return ResponseEntity.badRequest().build();
     }
 
     /**
      * Энпоинт удаления email
      * @param clientId идентификатор клиента.
-     * @param email адрес emil.
+     * @param contactRequest адрес emil.
      * @return ответ с обновленным клиентом.
      */
     @DeleteMapping("/{client_id}/emails")
+    @Operation(summary = "Remove email to client by his id")
     @PreAuthorize("@customSecurityExpression.canAccessUser(#clientId)")
     public ResponseEntity<ClientDto> removeEmailClient(
             @PathVariable("client_id") Long clientId,
-            @RequestParam(value = "email", required = false) String email){
-        if (email != null){
-            Client client = clientService.removeEmail(clientId, email);
-            return ResponseEntity.ok(clientMapper.toDto(client));
-        }
-        return ResponseEntity.badRequest().build();
+            @RequestBody ContactRequest contactRequest){
+        Client client = clientService.removeEmail(clientId, contactRequest.contact());
+        return ResponseEntity.ok(clientMapper.toDto(client));
     }
 }

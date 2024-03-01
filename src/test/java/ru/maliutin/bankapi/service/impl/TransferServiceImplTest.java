@@ -22,6 +22,9 @@ import java.math.BigDecimal;
 
 import static org.mockito.Mockito.*;
 
+/**
+ * Тестирование сервиса транзакций.
+ */
 @ExtendWith({SpringExtension.class, MockitoExtension.class})
 @ActiveProfiles("test")
 @Import(TestConfig.class)

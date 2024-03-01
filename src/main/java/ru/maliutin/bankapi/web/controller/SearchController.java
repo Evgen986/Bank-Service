@@ -1,5 +1,7 @@
 package ru.maliutin.bankapi.web.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/search")
+@Tag(name = "Search Controller", description = "Search API")
 public class SearchController {
     /**
      * Сервис поиска и сортировки.
@@ -39,6 +42,7 @@ public class SearchController {
      * @return ответ со списком клиентов.
      */
     @GetMapping("/birthday")
+    @Operation(summary = "Search for clients from a specified date of birth")
     public ResponseEntity<List<ClientDto>> getByBirthday(
             @RequestParam("date") LocalDate date,
             @RequestParam(name = "page", required = false) Integer page,
@@ -59,6 +63,7 @@ public class SearchController {
      * @return ответ с объектом клиента.
      */
     @GetMapping("/phone")
+    @Operation(summary = "Search for clients from a phone")
     public ResponseEntity<ClientDto> getByPhone(
             @RequestParam String phone){
         return ResponseEntity.ok(
@@ -74,6 +79,7 @@ public class SearchController {
      * @return ответ со списком клиентов.
      */
     @GetMapping("/name")
+    @Operation(summary = "Search for clients from a name")
     public ResponseEntity<List<ClientDto>> getByName(
             @RequestParam String name,
             @RequestParam(name = "page", required = false) Integer page,
@@ -96,6 +102,7 @@ public class SearchController {
      * @return ответ с объектом клиента.
      */
     @GetMapping("/email")
+    @Operation(summary = "Search for clients from a email")
     public ResponseEntity<ClientDto> getByEmail(@RequestParam String email){
         return ResponseEntity.ok(
                 clientMapper.toDto(searchService.findByEmail(email)));

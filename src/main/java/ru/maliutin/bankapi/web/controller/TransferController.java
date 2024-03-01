@@ -1,5 +1,7 @@
 package ru.maliutin.bankapi.web.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +18,7 @@ import ru.maliutin.bankapi.service.impl.TransferServiceImpl;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/transfer")
+@Tag(name = "Transfer Controller", description = "Bank API")
 public class TransferController {
     /**
      * Сервис транзакций.
@@ -28,6 +31,7 @@ public class TransferController {
      * @return ответ с подтверждением.
      */
     @PostMapping("/")
+    @Operation(summary = "Transfer money between clients")
     public ResponseEntity<TransferResponse> transfer(@RequestBody TransferRequest request){
         transferService.transfer(request.creditClientId(),
                 request.debitClientId(), request.sum());

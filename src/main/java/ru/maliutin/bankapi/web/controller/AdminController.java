@@ -1,5 +1,7 @@
 package ru.maliutin.bankapi.web.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,6 +21,7 @@ import ru.maliutin.bankapi.model.Client;
 @RequiredArgsConstructor
 @RequestMapping("/api/admin")
 @Validated
+@Tag(name = "Admin Controller", description = "Admin API")
 public class AdminController {
 
     private final ClientServiceImpl clientService;
@@ -30,6 +33,7 @@ public class AdminController {
      * @return ответ с новым клиентом.
      */
     @PostMapping("/create")
+    @Operation(summary = "Create new client")
     public ResponseEntity<ClientDto> createClient(
             @Validated @RequestBody ClientDto clientDto){
         Client client = clientService.createClient(clientMapper.toEntity(clientDto));

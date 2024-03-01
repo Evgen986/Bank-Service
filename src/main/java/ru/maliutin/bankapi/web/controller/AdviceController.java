@@ -1,5 +1,6 @@
 package ru.maliutin.bankapi.web.controller;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -83,5 +84,28 @@ public class AdviceController {
                         )
         );
         return exceptionBody;
+    }
+    /**
+     * Исключение при ошибках аутентификации,
+     * неверном токене.
+     *
+     * @return объект ExceptionBody
+     */
+    @ExceptionHandler({AccessDeniedException.class,
+            org.springframework.security.access.AccessDeniedException.class})
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ExceptionBody handleAccessDenied() {
+        return new ExceptionBody("Access denied.");
+    }
+
+    /**
+     * Исключение при просроченном токене.
+     * @param e объект исключения.
+     * @return объект ExceptionBody.
+     */
+    @ExceptionHandler(ExpiredJwtException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ExceptionBody handleExpiredJwt(ExpiredJwtException e) {
+        return new ExceptionBody("Access denied. " + e.getMessage());
     }
 }

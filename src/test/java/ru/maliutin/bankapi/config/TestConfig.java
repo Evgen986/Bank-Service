@@ -4,6 +4,8 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.maliutin.bankapi.repository.ClientRepository;
 import ru.maliutin.bankapi.repository.EmailRepository;
 import ru.maliutin.bankapi.repository.PhoneRepository;
@@ -12,6 +14,9 @@ import ru.maliutin.bankapi.service.TransferService;
 import ru.maliutin.bankapi.service.impl.ClientServiceImpl;
 import ru.maliutin.bankapi.service.impl.TransferServiceImpl;
 
+/**
+ * Конфигурационный клас для тестирования.
+ */
 @TestConfiguration
 public class TestConfig {
 
@@ -28,10 +33,22 @@ public class TestConfig {
     public EmailRepository emailRepository(){
         return Mockito.mock(EmailRepository.class);
     }
+
+    @Bean
+    @Primary
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
     @Bean
     @Primary
     public ClientService clientService(){
-        return new ClientServiceImpl(clientRepository(), phoneRepository(), emailRepository());
+        return new ClientServiceImpl(
+                clientRepository(),
+                phoneRepository(),
+                emailRepository(),
+                passwordEncoder()
+        );
     }
 
     @Bean
