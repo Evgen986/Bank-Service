@@ -109,10 +109,16 @@ public class ClientServiceImpl implements ClientService {
      * Создание клиента.
      * @param client объект клиента.
      * @return объект созданного клиента.
+     * @throws ClientUpdateException логин занят.
      */
     @Override
     @Transactional
-    public Client createClient(Client client){
+    public Client createClient(Client client) throws ClientUpdateException{
+        Optional<Client> checkUsername =
+                clientRepository.findByUsername(client.getUsername());
+        if (checkUsername.isPresent()){
+            throw new ClientUpdateException("Username " + client.getUsername() + " is busy");
+        }
         client.getPhones().forEach(p -> checkPhone(p.getPhoneNumber()));
         client.getEmails().forEach(e -> checkEmail(e.getEmail()));
         client.getAccount().setInitialDeposit(client.getAccount().getBalance());

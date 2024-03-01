@@ -3,6 +3,9 @@ package ru.maliutin.bankapi.web.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +20,7 @@ import ru.maliutin.bankapi.model.Client;
 /**
  * Служебный контроллер.
  */
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/admin")
@@ -37,6 +41,7 @@ public class AdminController {
     public ResponseEntity<ClientDto> createClient(
             @Validated @RequestBody ClientDto clientDto){
         Client client = clientService.createClient(clientMapper.toEntity(clientDto));
+        log.warn("Create new user {}", client.getUsername());
         return ResponseEntity.ok(clientMapper.toDto(client));
     }
 

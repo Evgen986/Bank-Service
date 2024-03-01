@@ -1,0 +1,14 @@
+ru.maliutin.bankapi
+ru.maliutin.bankapi.config
+ru.maliutin.bankapi.model
+ru.maliutin.bankapi.model.exception
+ru.maliutin.bankapi.repository
+ru.maliutin.bankapi.service
+ru.maliutin.bankapi.service.impl
+ru.maliutin.bankapi.web.controller
+ru.maliutin.bankapi.web.dto
+ru.maliutin.bankapi.web.mapper
+ru.maliutin.bankapi.web.model
+ru.maliutin.bankapi.web.security
+ru.maliutin.bankapi.web.security.expression
+ru.maliutin.bankapi.web.security.props

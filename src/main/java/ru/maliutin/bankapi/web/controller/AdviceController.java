@@ -1,6 +1,7 @@
 package ru.maliutin.bankapi.web.controller;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,8 +16,10 @@ import java.util.stream.Collectors;
 /**
  * Контроллер Обработки исключений.
  */
+@Slf4j
 @RestControllerAdvice
 public class AdviceController {
+
     /**
      * Энпоинт обработки исключений отсутствия объектов.
      *
@@ -26,6 +29,7 @@ public class AdviceController {
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ExceptionBody handleResourceNotFound(ResourceNotFoundException e) {
+        log.warn(e.getMessage());
         return new ExceptionBody(e.getMessage());
     }
     /**
@@ -37,6 +41,7 @@ public class AdviceController {
     @ExceptionHandler(ClientUpdateException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionBody handleClientUpdate(ClientUpdateException e) {
+        log.warn(e.getMessage());
         return new ExceptionBody(e.getMessage());
     }
     /**
@@ -48,6 +53,7 @@ public class AdviceController {
     @ExceptionHandler(ExcessBalanceException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionBody handleExcessBalance(ExcessBalanceException e) {
+        log.warn(e.getMessage());
         return new ExceptionBody(e.getMessage());
     }
     /**
@@ -60,6 +66,7 @@ public class AdviceController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionBody handleIncorrectTransferAmount(
             IncorrectTransferAmountException e) {
+        log.warn(e.getMessage());
         return new ExceptionBody(e.getMessage());
     }
 
@@ -73,6 +80,7 @@ public class AdviceController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionBody handleMethodArgumentNotValid(
             MethodArgumentNotValidException e) {
+        log.warn(e.getMessage());
         ExceptionBody exceptionBody = new ExceptionBody("Validation failed!");
         List<FieldError> errors = e.getBindingResult().getFieldErrors();
         exceptionBody.setErrors(
@@ -106,6 +114,7 @@ public class AdviceController {
     @ExceptionHandler(ExpiredJwtException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ExceptionBody handleExpiredJwt(ExpiredJwtException e) {
+        log.warn(e.getMessage());
         return new ExceptionBody("Access denied. " + e.getMessage());
     }
 }
